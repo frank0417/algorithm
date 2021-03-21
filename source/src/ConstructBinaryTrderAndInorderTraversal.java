@@ -23,4 +23,10 @@ public class ConstructBinaryTrderAndInorderTraversal {
         root.right = buildTree(preorder, pStart+leftLength+ 1, pEnd, inorder, inRootIndex + 1, iEnd);
         return root;
     }
+
+    public static void main(String[] args) {
+        ConstructBinaryTrderAndInorderTraversal con=new ConstructBinaryTrderAndInorderTraversal();
+        TreeNode treeNode=con.buildTree(new int[]{},new int[]{});
+        System.out.println("");
+    }
 }

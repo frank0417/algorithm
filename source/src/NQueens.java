@@ -17,11 +17,11 @@ public class NQueens {
                 queens[i][j] = '.';
             }
         }
-        dsp(0, queens);
+        dfs(0, queens);
         return result;
     }
 
-    private void dsp(int row, char[][] queens) {
+    private void dfs(int row, char[][] queens) {
         if (row == queens.length) {
             result.add(print(queens));
             return;
@@ -30,7 +30,7 @@ public class NQueens {
         for (int i = 0; i < queens.length; ++i) {
             if (check(queens, row, i)) {
                 queens[row][i] = 'Q';
-                dsp(row + 1, queens);
+                dfs(row + 1, queens);
                 queens[row][i] = '.';
             } else {
                 continue;

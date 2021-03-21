@@ -41,7 +41,7 @@ public class ValidAnagram {
 
     public boolean isAnagram3(String s, String t) {
         if (s == null || t == null || s.length() != t.length()) return false;
-        Map<Character, Integer> table = new HashMap<>();
+        Map<Character, Integer> table = new HashMap<>(26);
         for (Character ch : s.toCharArray()) {
             table.put(ch, table.getOrDefault(ch, 0) + 1);
         }
