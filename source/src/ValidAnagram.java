@@ -38,29 +38,4 @@ public class ValidAnagram {
         }
         return true;
     }
-
-    public boolean isAnagram3(String s, String t) {
-        if (s == null || t == null || s.length() != t.length()) return false;
-        Map<Character, Integer> table = new HashMap<>(26);
-        for (Character ch : s.toCharArray()) {
-            table.put(ch, table.getOrDefault(ch, 0) + 1);
-        }
-
-        for (Character ch : t.toCharArray()) {
-            table.put(ch, table.getOrDefault(ch, 0) - 1);
-            if (table.get(ch) < 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static void main(String[] args) {
-        char a = 'a';
-        char b = 'b';
-        System.out.println(a - 'a');
-        System.out.println(b - 'a');
-        ValidAnagram v = new ValidAnagram();
-        v.validAnagram1("abcd", "bacd");
-    }
 }

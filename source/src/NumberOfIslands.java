@@ -6,38 +6,51 @@ public class NumberOfIslands {
      *       岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
      *       此外，你可以假设该网格的四条边均被水包围
      */
-
-    public int maxAreaOfIsland(int[][] grid) {
-        int res = 0;
-        for (int r = 0; r < grid.length; r++) {
-            for (int c = 0; c < grid[0].length; c++) {
-                if (grid[r][c] == 1) {
-                    int a = area(grid, r, c);
-                    res = Math.max(res, a);
+    public int numIslands(char[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int countZero = 0;
+        UnionFind uf = new UnionFind(m * n);
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (grid[i][j] == '0') {
+                    countZero++;
+                    continue;
                 }
+                if (j > 0 && grid[i][j - 1] == '1') uf.union(i * n + j, i * n + j - 1);
+                if (j + 1 < n && grid[i][j + 1] == '1') uf.union(i * n + j, i * n + j + 1);
+                if (i > 0 && grid[i - 1][j] == '1') uf.union(i * n + j, (i - 1) * i + j);
+                if (i + 1 < m && grid[i + 1][j] == '1') uf.union(i * n + j, (i + 1) * n + j);
             }
         }
-        return res;
+        return uf.count - countZero;
+    }
+}
+
+class UnionFind {
+    int count;
+    int[] parent;
+
+    public UnionFind(int n) {
+        count = n;
+        parent = new int[n];
+        for (int i = 0; i < n; ++i) {
+            parent[i] = i;
+        }
     }
 
-    int area(int[][] grid, int r, int c) {
-        if (!inArea(grid, r, c)) {
-            return 0;
+    public int find(int p) {
+        while (p != parent[p]) {
+            parent[p] = parent[parent[p]];
+            p = parent[p];
         }
-        if (grid[r][c] != 1) {
-            return 0;
-        }
-        grid[r][c] = 2;
-
-        return 1
-                + area(grid, r - 1, c)
-                + area(grid, r + 1, c)
-                + area(grid, r, c - 1)
-                + area(grid, r, c + 1);
+        return p;
     }
 
-    boolean inArea(int[][] grid, int r, int c) {
-        return 0 <= r && r < grid.length
-                && 0 <= c && c < grid[0].length;
+    public void union(int p, int q) {
+        int rootP = find(p);
+        int rootQ = find(q);
+        if (rootP == rootQ) return;
+        parent[rootP] = rootQ;
+        count--;
     }
 }

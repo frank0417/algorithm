@@ -10,26 +10,21 @@ public class SlidingWindowMaximum {
      *       返回滑动窗口中的最大值。
      */
     public int[] slidingWindowMaximum(int[] nums, int k) {
-        int n = 0;
-        if (nums == null || (n = nums.length) == 0) return nums;
-        int[] res = new int[n - k + 1];
-        Deque<Integer> dq = new ArrayDeque<>(3);
-        for (int i = 0; i < n; ++i) {
-            if (!dq.isEmpty() && dq.getFirst() < (i - k - 1)) {
-                dq.removeFirst();
-            }
-
-            while (!dq.isEmpty() && nums[i] > nums[dq.getLast()]) {
+        int len=0;
+        if(nums==null || (len=nums.length)==0) return new int[0];
+        Deque<Integer> dq=new ArrayDeque<>(k);
+        int[] result=new int[len-k+1];
+        for(int i=0;i<len;++i){
+            if(!dq.isEmpty() && i-dq.getFirst()>k-1) dq.removeFirst();
+            while(!dq.isEmpty() && nums[i] > nums[dq.getLast()]){
                 dq.removeLast();
             }
-
             dq.addLast(i);
-
-            if (i >= k - 1) {
-                res[i - k + 1] = nums[dq.getFirst()];
+            if(i>=k-1){
+                result[i-k+1]=nums[dq.getFirst()];
             }
         }
-        return res;
+        return result;
     }
 
 
@@ -53,6 +48,6 @@ public class SlidingWindowMaximum {
 
     public static void main(String[] args) {
         SlidingWindowMaximum s = new SlidingWindowMaximum();
-        s.slidingWindowMaximum(new int[]{1, 3, -1, -3, 5, 3, 6, 7}, 3);
+        s.slidingWindowMaximum(new int[]{7,2,4}, 2);
     }
 }
